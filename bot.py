@@ -10,7 +10,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Hi, I'm the Movie Recommendation Chatbot!  How can I help you?",
+            "content": "Hi, I'm the Movie Expert Chatbot!  How can I help you?",
         },
     ]
 

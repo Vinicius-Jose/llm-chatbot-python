@@ -5,4 +5,4 @@ from langchain_ollama import ChatOllama, OllamaEmbeddings
 llm = ChatOllama(model="llama3.1")
 
 # Create the Embedding model
-embedding_model = OllamaEmbeddings(model="rjmalagon/gte-qwen2-1.5b-instruct-embed-f16")
+embeddings = OllamaEmbeddings(model="rjmalagon/gte-qwen2-1.5b-instruct-embed-f16")

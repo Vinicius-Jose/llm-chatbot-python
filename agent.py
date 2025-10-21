@@ -1,6 +1,6 @@
 from llm import llm
 from graph import graph
-from langchain_core.prompts import ChatPromptTemplate
+from prompts import chat_prompt, agent_prompt
 from langchain.schema import StrOutputParser
 from langchain.tools import Tool
 from langchain_neo4j import Neo4jChatMessageHistory
@@ -8,14 +8,10 @@ from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain import hub
 from utils import get_session_id
+from tools.vector import get_movie_plot
 
 # Create a movie chat chain
-chat_prompt = ChatPromptTemplate(
-    [
-        ("system", "You are a movie expert providing information about movies."),
-        ("human", "{input}"),
-    ]
-)
+
 
 movie_chat = chat_prompt | llm | StrOutputParser()
 
@@ -25,7 +21,12 @@ tools = [
         name="General Chat",
         description="For general movie chat not covered by other tools",
         func=movie_chat.invoke,
-    )
+    ),
+    Tool.from_function(
+        name="Movie Plot Search",
+        description="For when you need to find information about movies based on a plot",
+        func=get_movie_plot,
+    ),
 ]
 
 
@@ -35,7 +36,7 @@ def get_memory(session_id):
 
 
 # Create the agent
-agent_prompt = hub.pull("hwchase17/react-chat")
+
 agent = create_react_agent(llm, tools, agent_prompt)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 chat_agent = RunnableWithMessageHistory(
