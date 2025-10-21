@@ -53,6 +53,6 @@ def generate_response(user_input):
     and returns a response to be rendered in the UI
     """
     response = chat_agent.invoke(
-        {"input": user_input, "config": {"session_id": get_session_id()}}
+        {"input": user_input}, config={"configurable": {"session_id": get_session_id()}}
     )
     return response["output"]
