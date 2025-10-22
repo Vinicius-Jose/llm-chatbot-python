@@ -4,7 +4,7 @@ from graph import graph
 from langchain_neo4j import GraphCypherQAChain
 
 # Create the Cypher QA chain
-cypher_qa = GraphCypherQAChain(
+cypher_qa = GraphCypherQAChain.from_llm(
     llm,
     graph=graph,
     verbose=True,
