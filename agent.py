@@ -44,7 +44,9 @@ def get_memory(session_id):
 # Create the agent
 
 agent = create_react_agent(llm, tools, agent_prompt)
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+agent_executor = AgentExecutor(
+    agent=agent, tools=tools, verbose=True, handle_parsing_errors=True
+)
 chat_agent = RunnableWithMessageHistory(
     agent_executor,
     get_memory,
