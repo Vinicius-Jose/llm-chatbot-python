@@ -8,3 +8,4 @@ langchainhub==0.1.21
 langchain-neo4j==0.1.1
 ollama
 llama-stack
+langchain_groq
