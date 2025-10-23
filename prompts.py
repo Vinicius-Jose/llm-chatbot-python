@@ -92,7 +92,26 @@ MATCH (p:Person)-[r:DIRECTED]->(m:Movie {{title: "Movie Title"}})
 RETURN p.name
 ```
 
-3. How to find how many degrees of separation there are between two people::
+```
+
+Schema:
+{schema}
+
+Question:
+{question}
+"""
+cypher_prompt = PromptTemplate.from_template(CYPHER_GENERATION_TEMPLATE)
+
+SIX_DEGREES_KEVIN_BEACON = """
+You are an expert Neo4j Developer translating user questions into Cypher to answer questions about movies and provide recommendations.
+Convert the user's question based on the schema.
+
+Use only the provided relationship types and properties in the schema.
+Do not use any other relationship types or properties that are not provided.
+You can use the example bellow to find the degrees of separation
+
+Example Cypher Statements:
+1. How to find how many degrees of separation there are between two people::
 ```
 MATCH path = shortestPath(
   (p1:Person {{name: "Actor 1"}})-[:ACTED_IN|DIRECTED*]-(p2:Person {{name: "Actor 2"}})
@@ -112,11 +131,11 @@ RETURN
       END
   ) AS pathBetweenPeople
 ```
-
 Schema:
 {schema}
 
 Question:
 {question}
-"""
-cypher_prompt = PromptTemplate.from_template(CYPHER_GENERATION_TEMPLATE)
+
+  """
+six_degrees_prompt = PromptTemplate.from_template(CYPHER_GENERATION_TEMPLATE)

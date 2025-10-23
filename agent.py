@@ -9,7 +9,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain import hub
 from utils import get_session_id
 from tools.vector import get_movie_plot
-from tools.cypher import cypher_qa
+from tools.cypher import cypher_qa, degrees_separation_cypher
 
 # Create a movie chat chain
 
@@ -30,8 +30,13 @@ tools = [
     ),
     Tool.from_function(
         name="Movie Information",
-        description="Provide information about movies questions using Cypher",
+        description="For when you need information about movies,actors and directors questions using Cypher",
         func=cypher_qa,
+    ),
+    Tool.from_function(
+        name="Degrees of separation",
+        description="For when you need discover the degrees of separation between two actors or directors questions using Cypher",
+        func=degrees_separation_cypher,
     ),
 ]
 
